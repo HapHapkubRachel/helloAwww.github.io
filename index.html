@@ -148,6 +148,8 @@
                 'เจมส์': 'ดูหนักๆนะมึงอะ',
                 'เบส': 'ศรัณ? ไก่??',
                 'จุ๊': 'ไก่ ไก่ ไก่ กุ๊กๆ',
+                'ฟลุ๊ค': 'ลูกอีรัก',
+                'fluke': 'กลูอีกัร',
                 'panusorn': 'ครับต้อม ',
                 'เหมือง': 'เหี้ยไรต้อม',
                 'เฟล': 'พิกูลลล',
@@ -156,7 +158,9 @@
                 'ออโต้': 'ว่าไงจ๊ะศรัณ',
                 'โต้': 'ครับศรัณ',
                 'มิก': 'ม่อน',
-                'mix': 'ว่าไงจ๊ะลูกพ่อม่อน'
+                'mix': 'ว่าไงจ๊ะลูกพ่อม่อน',
+                'ตังค์': 'ควยไรเอนก',
+                'alex': 'เหี้ยไรอ้อย'
 
             };
 
@@ -172,13 +176,13 @@
             modal.style.display = "block";
         }
 
-        // ปิด Modal เมื่อคลิกที่เครื่องหมาย X
+        
         const closeBtn = document.getElementsByClassName("close")[0];
         closeBtn.onclick = function() {
             document.getElementById('resultModal').style.display = "none";
         }
 
-        // ปิด Modal เมื่อคลิกนอกพื้นที่ Modal
+        
         window.onclick = function(event) {
             const modal = document.getElementById('resultModal');
             if (event.target == modal) {
@@ -186,7 +190,7 @@
             }
         }
 
-        // เพิ่มการตอบสนองเมื่อกด Enter
+        
         document.getElementById('nameInput').addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
                 findMother();
