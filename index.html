@@ -3,200 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lukkaia</title>
+    <title>Share your stories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Kanit', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1E1E1E;
+            color: #F8E8FF;
+            transition: background-color 0.3s ease;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #E0B0FF;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(224, 176, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(224, 176, 255, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(224, 176, 255, 0.8);
+            }
+        }
+        #username-screen, #main-screen {
+            display: none;
+            background-color: #2A2A2A;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        #username-screen:hover, #main-screen:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 30px;
+            background-color: #3A3A3A;
+            color: #F8E8FF;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px #E0B0FF, inset 0 2px 5px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        button {
+            background-color: #E0B0FF;
+            color: #1E1E1E;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(224, 176, 255, 0.3);
+        }
+        button:hover {
+            background-color: #D1A1FF;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(224, 176, 255, 0.4);
+        }
+        button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(224, 176, 255, 0.4);
+        }
+        .post {
+            background-color: #2A2A2A;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .post:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-emoji {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #E0B0FF;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(45deg, #1a1a1a, #2c2c2c, #1a1a1a);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: #ffffff;
+            font-size: 30px;
+            margin-right: 20px;
+            box-shadow: 0 5px 15px rgba(224, 176, 255, 0.3);
+            transition: all 0.3s ease;
         }
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+        .profile-emoji:hover {
+            transform: scale(1.1) rotate(10deg);
         }
-        .container {
-            background-color: rgba(44, 44, 44, 0.8);
-            padding: 50px;
+        .username {
+            font-weight: bold;
+            font-size: 20px;
+            color: #E0B0FF;
+        }
+        .timestamp {
+            margin-left: 10px;
+            color: #B8B8B8;
+            font-size: 14px;
+        }
+        .post-content {
+            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .post-media {
+            max-width: 100%;
             border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            text-align: center;
-            width: 90%;
-            max-width: 600px;
-        }
-        h2 {
-            font-size: 3em;
-            margin-bottom: 40px;
-            color: #4da6ff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        input, button {
-            width: 100%;
-            padding: 20px;
-            margin: 15px 0;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.4em;
-        }
-        input {
-            background-color: #3a3a3a;
-            color: #ffffff;
-        }
-        button {
-            background-color: #4da6ff;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #3385ff;
-            transform: scale(1.05);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-        }
-        .modal-content {
-            background-color: #2c2c2c;
-            margin: 15% auto;
-            padding: 30px;
-            border: 2px solid #4da6ff;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(77,166,255,0.5);
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 35px;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .close:hover,
-        .close:focus {
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        #result {
-            font-size: 2.5em;
-            font-weight: bold;
             margin-top: 20px;
-            color: #4da6ff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px;
-            }
-            h2 {
-                font-size: 2em;
-            }
-            input, button {
-                font-size: 1.2em;
-                padding: 15px;
-            }
-            #result {
-                font-size: 2em;
-            }
+        .post-media:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        #media-preview {
+            max-width: 100%;
+            border-radius: 20px;
+            margin-top: 20px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        #media-upload {
+            display: none;
+        }
+        .media-upload-label {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #3A3A3A;
+            color: #F8E8FF;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .media-upload-label:hover {
+            background-color: #4A4A4A;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .action-button {
+            background: none;
+            border: none;
+            color: #B8B8B8;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 20px;
+            width: 45%;
+        }
+        .action-button:hover {
+            background-color: rgba(224, 176, 255, 0.1);
+            color: #E0B0FF;
+            transform: translateY(-2px);
+        }
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #3A3A3A;
+        }
+        .comment {
+            background-color: #3A3A3A;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .comment:hover {
+            transform: translateX(5px);
+            box-shadow: -5px 5px 15px rgba(0,0,0,0.1);
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .comment-username {
+            font-weight: bold;
+            color: #E0B0FF;
+        }
+        .comment-timestamp {
+            font-size: 12px;
+            color: #B8B8B8;
+        }
+        .comment-content {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .comment-actions {
+            display: flex;
+            justify-content: flex-start;
+            gap: 15px;
+        }
+        .comment-action {
+            background: none;
+            border: none;
+            color: #B8B8B8;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        .comment-action:hover {
+            background-color: rgba(224, 176, 255, 0.1);
+            color: #E0B0FF;
+            transform: translateY(-2px);
+        }
+        .comment-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        .comment-input {
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+        .comment-submit {
+            width: auto;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h2>Write your name</h2>
-        <input type="text" id="nameInput" placeholder="กรอกชื่อของคุณ">
-        <button onclick="findMother()">Submit</button>
-    </div>
+        <h1>🐳 Share your stories noi</h1>
+        
+        <div id="username-screen">
+            <input type="text" id="username-input" placeholder="enter your name">
+            <button onclick="setUsername()">Start</button>
+        </div>
 
-    <div id="resultModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="result"></p>
+        <div id="main-screen">
+            <textarea id="post-content" placeholder="What r u thinking??"></textarea>
+            <label for="media-upload" class="media-upload-label">📎 Add Image/Video</label>
+            <input type="file" id="media-upload" accept="image/*,video/*">
+            <img id="media-preview">
+            <button onclick="createPost()">agree</button>
+
+            <div id="posts-container"></div>
         </div>
     </div>
 
     <script>
-        function findMother() {
-            const name = document.getElementById('nameInput').value.toLowerCase();
-            const mothers = {
-                'james': 'ว่าไงหนัก',
-                'เจมส์': 'ดูหนักๆนะมึงอะ',
-                'เบส': 'ศรัณ? ไก่??',
-                'จุ๊': 'ไก่ ไก่ ไก่ กุ๊กๆ',
-                'ฟลุ๊ค': 'ลูกอีรัก',
-                'fluke': 'กลูอีกัร',
-                'panusorn': 'ครับต้อม ',
-                'เหมือง': 'เหี้ยไรต้อม',
-                'เฟล': 'พิกูลลล',
-                'fel': 'ครับพิกูลล',
-                'auto': 'อะไรศรัณ',
-                'ออโต้': 'ว่าไงจ๊ะศรัณ',
-                'โต้': 'ครับศรัณ',
-                'มิก': 'ม่อน',
-                'mix': 'ว่าไงจ๊ะลูกพ่อม่อน',
-                'ไอคิว': 'แอปเปิ้ล',
-                'iq': 'พิจิตร',
-                'ตังค์': 'ควยไรเอนก',
-                'alex': 'เหี้ยไรอ้อย'
-                
+        let username = '';
+        const posts = [];
+        const emojis = ['😀', '😎', '🤔', '😍', '🤩', '😊', '🧐', '🤓', '😇', '🥳', '😺', '🐱', '🐶', '🦊', '🦁', '🐯', '🐼', '🐨', '🐵', '🐸'];
 
-            };
+        window.onload = () => {
+            document.getElementById('username-screen').style.display = 'block';
+        };
 
-            const result = document.getElementById('result');
-            const modal = document.getElementById('resultModal');
-
-            if (mothers.hasOwnProperty(name)) {
-                result.textContent = `${mothers[name]}`;
+        function setUsername() {
+            username = document.getElementById('username-input').value.trim();
+            if (username) {
+                document.getElementById('username-screen').style.display = 'none';
+                document.getElementById('main-screen').style.display = 'block';
             } else {
-                result.textContent = 'พิมพ์ดีๆดิไอ่สัส';
-            }
-
-            modal.style.display = "block";
-        }
-
-        
-        const closeBtn = document.getElementsByClassName("close")[0];
-        closeBtn.onclick = function() {
-            document.getElementById('resultModal').style.display = "none";
-        }
-
-        
-        window.onclick = function(event) {
-            const modal = document.getElementById('resultModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
+                alert('กรุณาตั้งชื่อผู้ใช้');
             }
         }
 
-        
-        document.getElementById('nameInput').addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                findMother();
+        function createPost() {
+            const content = document.getElementById('post-content').value.trim();
+            const mediaUpload = document.getElementById('media-upload');
+            const mediaPreview = document.getElementById('media-preview');
+            
+            if (content || mediaUpload.files.length > 0) {
+                const post = {
+                    username: username,
+                    content: content,
+                    media: mediaPreview.src,
+                    timestamp: new Date().toLocaleString('th-TH'),
+                    emoji: getRandomEmoji(),
+                    likes: 0,
+                    comments: []
+                };
+                posts.unshift(post);
+                renderPosts();
+                document.getElementById('post-content').value = '';
+                mediaUpload.value = '';
+                mediaPreview.src = '';
+                mediaPreview.style.display = 'none';
+            } else {
+                alert('Type something..');
+            }
+        }
+
+        function renderPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <div class="profile-emoji">${post.emoji}</div>
+                        <div>
+                            <div class="username">${post.username}</div>
+                            <div class="timestamp">${post.timestamp}</div>
+                        </div>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    ${post.media ? `<img src="${post.media}" class="post-media">` : ''}
+                    <div class="post-actions">
+                        <button class="action-button" onclick="likePost(${index})">❤️ ${post.likes}</button>
+                        <button class="action-button" onclick="toggleComments(${index})">💬 Comment (${post.comments.length})</button>
+                    </div>
+                    <div class="comments-section" id="comments-${index}" style="display: none;">
+                        ${renderComments(post.comments, index)}
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="comment-input-${index}" placeholder="">
+                            <button class="comment-submit" onclick="addComment(${index})">submit</button>
+                        </div>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        function renderComments(comments, postIndex) {
+            return comments.map((comment, commentIndex) => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-username">${comment.username}</span>
+                        <span class="comment-timestamp">${comment.timestamp}</span>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                    <div class="comment-actions">
+                        <button class="comment-action" onclick="likeComment(${postIndex}, ${commentIndex})">❤️ ${comment.likes}</button>
+                        <button class="comment-action" onclick="replyToComment(${postIndex}, ${commentIndex})">↩️ Reply</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getRandomEmoji() {
+            return emojis[Math.floor(Math.random() * emojis.length)];
+        }
+
+        function likePost(index) {
+            posts[index].likes++;
+            renderPosts();
+        }
+
+        function toggleComments(index) {
+            const commentsSection = document.getElementById(`comments-${index}`);
+            commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function addComment(postIndex) {
+            const commentInput = document.getElementById(`comment-input-${postIndex}`);
+            const content = commentInput.value.trim();
+            if (content) {
+                posts[postIndex].comments.push({
+                    username: username,
+                    content: content,
+                    timestamp: new Date().toLocaleString('th-TH'),
+                    likes: 0
+                });
+                renderPosts();
+                commentInput.value = '';
+            }
+        }
+
+        function likeComment(postIndex, commentIndex) {
+            posts[postIndex].comments[commentIndex].likes++;
+            renderPosts();
+        }
+
+        function replyToComment(postIndex, commentIndex) {
+            const commentInput = document.getElementById(`comment-input-${postIndex}`);
+            const replyToUsername = posts[postIndex].comments[commentIndex].username;
+            commentInput.value = `@${replyToUsername} `;
+            commentInput.focus();
+        }
+
+        document.getElementById('media-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const mediaPreview = document.getElementById('media-preview');
+                    mediaPreview.src = e.target.result;
+                    mediaPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
             }
         });
     </script>
